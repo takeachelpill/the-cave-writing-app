@@ -1,0 +1,916 @@
+/* CSS Variables for theming */
+:root {
+  --bg: #1a1a1a;
+  --bg-secondary: #242424;
+  --bg-tertiary: #2d2d2d;
+  --text: #e0e0e0;
+  --text-secondary: #a0a0a0;
+  --text-muted: #666;
+  --accent: #4a9eff;
+  --accent-hover: #6ab0ff;
+  --border: #333;
+  --danger: #ff4a4a;
+  --success: #4aff7a;
+
+  --font-family: 'Literata', Georgia, serif;
+  --font-size: 18px;
+  --column-width: 700px;
+  --paragraph-spacing: 1.5em;
+
+  --title-bar-height: 36px;
+  --status-bar-height: 32px;
+  --sidebar-width: 240px;
+}
+
+.light-mode {
+  --bg: #f5f5f5;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #eaeaea;
+  --text: #1a1a1a;
+  --text-secondary: #555;
+  --text-muted: #888;
+  --border: #ddd;
+}
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Font faces - using system fonts as fallback */
+@font-face {
+  font-family: 'Literata';
+  src: local('Literata'), local('Georgia');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'iA Writer Mono';
+  src: local('iA Writer Mono'), local('Consolas'), local('monospace');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Source Sans 3';
+  src: local('Source Sans 3'), local('Source Sans Pro'), local('Segoe UI');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Body */
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  background: var(--bg);
+  color: var(--text);
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Title Bar */
+#title-bar {
+  height: var(--title-bar-height);
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  -webkit-app-region: drag;
+  user-select: none;
+}
+
+#title-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.title-btn {
+  -webkit-app-region: no-drag;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  width: 36px;
+  height: 28px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.title-btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text);
+}
+
+.title-btn.close:hover {
+  background: var(--danger);
+  color: white;
+}
+
+#window-controls {
+  display: flex;
+  gap: 4px;
+}
+
+/* Main Container */
+#main-container {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+/* Sidebar */
+#sidebar {
+  width: var(--sidebar-width);
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.2s ease;
+  overflow: hidden;
+}
+
+#sidebar.hidden {
+  margin-left: calc(-1 * var(--sidebar-width));
+}
+
+#sidebar-header {
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+#sidebar-header h2 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.section-header button {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 16px;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.section-header button:hover {
+  background: var(--bg-tertiary);
+  color: var(--accent);
+}
+
+#chapters-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#chapters-list {
+  list-style: none;
+  flex: 1;
+  overflow-y: auto;
+}
+
+#chapters-list li {
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-secondary);
+  border-left: 3px solid transparent;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#chapters-list li:hover {
+  background: var(--bg-tertiary);
+  color: var(--text);
+}
+
+#chapters-list li.active {
+  background: var(--bg-tertiary);
+  color: var(--accent);
+  border-left-color: var(--accent);
+}
+
+#chapters-list li .has-todo {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+#chapters-list li .chapter-title {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#chapters-list li .chapter-title[contenteditable="true"] {
+  background: var(--bg);
+  padding: 2px 4px;
+  border-radius: 2px;
+  outline: 1px solid var(--accent);
+}
+
+/* Headings Section */
+#headings-section {
+  max-height: 180px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+
+#headings-section:empty,
+#headings-section.hidden {
+  display: none;
+}
+
+#headings-list {
+  list-style: none;
+  overflow-y: auto;
+  flex: 1;
+}
+
+#headings-list li {
+  padding: 6px 16px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text-secondary);
+  transition: background 0.15s, color 0.15s;
+}
+
+#headings-list li:hover {
+  background: var(--bg-tertiary);
+  color: var(--text);
+}
+
+#headings-list li .heading-text {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#todos-section {
+  max-height: 200px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+
+#todos-list {
+  list-style: none;
+  overflow-y: auto;
+  flex: 1;
+}
+
+#todos-list li {
+  padding: 6px 16px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text-muted);
+  transition: background 0.15s, color 0.15s;
+}
+
+#todos-list li:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+
+#todos-list li .todo-text {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#todos-list li .todo-location {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+/* Editor Container */
+#editor-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+#editor-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  padding-bottom: 50vh;
+  overflow-y: auto;
+}
+
+#editor {
+  width: var(--column-width);
+  max-width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  line-height: 1.6;
+  color: var(--text);
+  caret-color: var(--accent);
+}
+
+#editor:empty::before {
+  content: attr(data-placeholder);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+#editor p {
+  margin: 0 0 var(--paragraph-spacing, 1em) 0;
+  min-height: 1em;
+}
+
+#editor p:last-child {
+  margin-bottom: 0;
+}
+
+#editor[contenteditable="false"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Editor headings (## syntax) */
+#editor p.heading {
+  font-size: 1.3em;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.3em;
+  margin-bottom: calc(var(--paragraph-spacing, 1em) + 0.2em);
+}
+
+/* Welcome Screen */
+#welcome-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background: var(--bg);
+}
+
+#welcome-screen.hidden {
+  display: none;
+}
+
+#welcome-screen h1 {
+  font-size: 36px;
+  font-weight: 300;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+#welcome-screen p {
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+}
+
+#welcome-buttons {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+#welcome-buttons button {
+  padding: 12px 24px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+#new-project-btn {
+  background: var(--accent);
+  color: white;
+}
+
+#new-project-btn:hover {
+  background: var(--accent-hover);
+}
+
+#open-project-btn {
+  background: var(--bg-tertiary);
+  color: var(--text);
+  border: 1px solid var(--border) !important;
+}
+
+#open-project-btn:hover {
+  background: var(--bg-secondary);
+}
+
+#recent-projects {
+  width: 100%;
+  max-width: 400px;
+}
+
+#recent-projects h3 {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+#recent-list {
+  list-style: none;
+}
+
+#recent-list li {
+  padding: 10px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+
+#recent-list li:hover {
+  background: var(--bg-tertiary);
+}
+
+#recent-list li .project-name {
+  font-size: 14px;
+  color: var(--text);
+}
+
+#recent-list li .project-path {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Status Bar */
+#status-bar {
+  height: var(--status-bar-height);
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+#status-left, #status-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.separator {
+  color: var(--border);
+}
+
+#timer-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 10px;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: background 0.15s, color 0.15s;
+}
+
+#timer-btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text);
+}
+
+#timer-btn.running {
+  color: var(--success);
+}
+
+#save-status {
+  font-size: 11px;
+  color: var(--success);
+}
+
+#settings-btn,
+#help-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background 0.15s, color 0.15s;
+}
+
+#help-btn {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+#settings-btn:hover,
+#help-btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text);
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content.modal-small {
+  width: 320px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-header h2 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.close-modal {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.close-modal:hover {
+  color: var(--text);
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.setting-group {
+  margin-bottom: 20px;
+}
+
+.setting-group:last-child {
+  margin-bottom: 0;
+}
+
+.setting-group label {
+  display: block;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.setting-group select {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 14px;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.setting-group select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.setting-group input[type="range"] {
+  width: 100%;
+  height: 4px;
+  background: var(--bg-tertiary);
+  border-radius: 2px;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+.setting-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  background: var(--accent);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.setting-group input[type="checkbox"] {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.setting-group label:has(input[type="checkbox"]) {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.setting-divider {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.setting-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+
+/* Buttons */
+.btn-primary,
+.btn-secondary {
+  padding: 8px 16px;
+  font-size: 13px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+}
+
+.btn-secondary {
+  background: var(--bg-tertiary);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+  background: var(--bg);
+}
+
+.btn-full {
+  width: 100%;
+}
+
+.btn-danger {
+  padding: 8px 16px;
+  font-size: 13px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s;
+  background: var(--danger);
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #ff6b6b;
+}
+
+.setting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.setting-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* Prompt modal */
+#prompt-input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+#prompt-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* Shortcuts table */
+.shortcuts-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+}
+
+.shortcuts-table td {
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.shortcuts-table td:first-child {
+  white-space: nowrap;
+  width: 45%;
+}
+
+.modal-body h3 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 16px 0 8px;
+}
+
+.modal-body h3:first-of-type {
+  margin-top: 0;
+}
+
+kbd {
+  display: inline-block;
+  padding: 2px 6px;
+  font-size: 11px;
+  font-family: monospace;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  box-shadow: 0 1px 0 var(--border);
+}
+
+.help-note {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.help-note code {
+  background: var(--bg);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+/* Help modal fixed font sizes (prevent editor font size from affecting) */
+#help-modal .modal-body {
+  font-size: 14px;
+}
+
+/* Context Menu */
+#context-menu {
+  position: fixed;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  padding: 4px;
+  z-index: 2000;
+  min-width: 120px;
+}
+
+#context-menu.hidden {
+  display: none;
+}
+
+#context-menu button {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+#context-menu button:hover {
+  background: var(--bg-tertiary);
+}
+
+#ctx-delete:hover {
+  background: var(--danger);
+  color: white;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Drag and Drop */
+.dragging {
+  opacity: 0.5;
+}
+
+.drag-over {
+  border-top: 2px solid var(--accent) !important;
+}
+
+/* Focus styles */
+button:focus-visible,
+select:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Selection */
+::selection {
+  background: var(--accent);
+  color: white;
+}

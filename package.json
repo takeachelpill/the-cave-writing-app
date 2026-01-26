@@ -1,0 +1,19 @@
+{
+  "name": "writing-app",
+  "version": "1.0.0",
+  "description": "A distraction-free writing environment with chapter organization",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "package": "electron-builder"
+  },
+  "keywords": ["writing", "editor", "distraction-free", "markdown"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "docx": "^9.0.2"
+  },
+  "devDependencies": {
+    "electron": "^28.0.0"
+  }
+}
