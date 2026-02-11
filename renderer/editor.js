@@ -19,6 +19,7 @@ const Editor = {
     // Input handling with debounced save
     this.element.addEventListener('input', () => {
       this.lastActivityTime = Date.now();
+      Find.onEditorInput();
       this.ensureParagraphs();
       this.scheduleSave();
       this.detectTodos();
@@ -357,6 +358,7 @@ const Editor = {
       this.detectTodos();
       this.detectHeadings();
       this.updateWordCount();
+      Find.onChapterLoad();
     } else {
       this.element.innerHTML = '';
       this.disable();

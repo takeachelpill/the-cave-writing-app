@@ -101,9 +101,9 @@ const Settings = {
       }
     });
 
-    // Close window button
+    // Close window button (close settings modal)
     document.getElementById('close-window-btn').addEventListener('click', () => {
-      window.electronAPI.close();
+      this.close();
     });
   },
 

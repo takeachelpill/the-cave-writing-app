@@ -297,7 +297,7 @@ body {
   padding: 6px 16px;
   cursor: pointer;
   font-size: 12px;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   transition: background 0.15s, color 0.15s;
 }
 
@@ -913,4 +913,125 @@ input:focus-visible {
 ::selection {
   background: var(--accent);
   color: white;
+}
+
+/* Find Bar */
+#find-bar {
+  position: absolute;
+  top: 0;
+  right: 20px;
+  z-index: 100;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#find-bar.hidden {
+  display: none;
+}
+
+.find-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.find-row.hidden {
+  display: none;
+}
+
+#find-input,
+#find-replace-input {
+  padding: 5px 8px;
+  font-size: 13px;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  width: 200px;
+  outline: none;
+}
+
+#find-input:focus,
+#find-replace-input:focus {
+  border-color: var(--accent);
+}
+
+#find-match-count {
+  font-size: 12px;
+  color: var(--text-muted);
+  min-width: 60px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.find-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 14px;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+
+.find-btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text);
+}
+
+#find-case-btn {
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+
+#find-case-btn.active {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.find-spacer {
+  width: 28px;
+  flex-shrink: 0;
+}
+
+.find-action-btn {
+  padding: 4px 10px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* Find highlights */
+#editor mark.find-highlight {
+  background: rgba(255, 235, 59, 0.35);
+  color: inherit;
+  border-radius: 2px;
+}
+
+#editor mark.find-highlight.find-current {
+  background: rgba(255, 152, 0, 0.55);
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+}
+
+/* Light mode adjustments for find highlights */
+.light-mode #editor mark.find-highlight {
+  background: rgba(255, 235, 59, 0.5);
+}
+
+.light-mode #editor mark.find-highlight.find-current {
+  background: rgba(255, 152, 0, 0.45);
 }

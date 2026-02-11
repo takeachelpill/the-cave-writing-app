@@ -7,6 +7,7 @@ const App = {
   async init() {
     // Initialize modules
     Editor.init();
+    Find.init();
     Sidebar.init();
     Stats.init();
     Settings.init();
@@ -93,14 +94,31 @@ const App = {
         await this.promptOpenProject();
       }
 
+      // Ctrl+F - Find
+      if (e.ctrlKey && !e.shiftKey && e.key === 'f') {
+        e.preventDefault();
+        Find.open(false);
+      }
+
+      // Ctrl+H - Find and Replace
+      if (e.ctrlKey && e.key === 'h') {
+        e.preventDefault();
+        Find.open(true);
+      }
+
       // Ctrl+Shift+E - Export as DOCX
       if (e.ctrlKey && e.shiftKey && e.key === 'E') {
         e.preventDefault();
         await Export.exportAsDocx();
       }
 
-      // Escape - Close modals or exit fullscreen
+      // Escape - Close find bar, modals, or exit fullscreen
       if (e.key === 'Escape') {
+        // Close find bar if open
+        if (Find.isOpen) {
+          Find.close();
+          return;
+        }
         // Close help modal if open
         if (!document.getElementById('help-modal').classList.contains('hidden')) {
           this.hideHelp();
@@ -347,7 +365,7 @@ const App = {
   showWelcome() {
     document.getElementById('welcome-screen').classList.remove('hidden');
     Sidebar.setProjectName('No Project');
-    document.getElementById('title-text').textContent = 'The Cave (A Writing App)';
+    document.getElementById('title-text').textContent = 'Writing App';
     Sidebar.renderChapters([]);
     Sidebar.renderHeadings([]);
     Sidebar.renderTodos([]);
